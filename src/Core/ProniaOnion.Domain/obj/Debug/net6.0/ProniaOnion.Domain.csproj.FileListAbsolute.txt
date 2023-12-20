@@ -1,0 +1,11 @@
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\bin\Debug\net6.0\ProniaOnion.Domain.deps.json
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\bin\Debug\net6.0\ProniaOnion.Domain.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\bin\Debug\net6.0\ProniaOnion.Domain.pdb
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.AssemblyInfoInputs.cache
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.AssemblyInfo.cs
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.csproj.CoreCompileInputs.cache
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\refint\ProniaOnion.Domain.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.pdb
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ref\ProniaOnion.Domain.dll

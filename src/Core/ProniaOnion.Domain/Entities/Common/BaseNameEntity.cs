@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProniaOnion.Domain.Entities.Common
+﻿namespace ProniaOnion.Domain.Entities
 {
-    internal class BaseNameEntity
+    public class BaseNameEntity : BaseEntity
     {
+        public string Name { get; set; } = null!;
     }
 }

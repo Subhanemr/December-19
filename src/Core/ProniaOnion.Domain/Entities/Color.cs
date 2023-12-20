@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProniaOnion.Domain.Entities
+﻿namespace ProniaOnion.Domain.Entities
 {
-    internal class Color
+    public class Color:BaseNameEntity
     {
+        //---Relational
+        public ICollection<ProductColor> ProductColors { get; set; }
     }
 }

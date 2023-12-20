@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Application.Abstractions.Repositories
 {
-    internal interface IProductRepository
+    public interface IProductRepository:IRepository<Product>
     {
     }
 }
