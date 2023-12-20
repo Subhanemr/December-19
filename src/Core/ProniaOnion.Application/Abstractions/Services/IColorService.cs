@@ -16,8 +16,8 @@ namespace ProniaOnion.Application.Abstractions.Services
         Task<ICollection<ItemColorDto>> GetAllAsync(int page, int take);
         Task<ICollection<ItemColorDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Color, object>>? orderExpression);
         //Task<GetCategoryDto> GetByIdAsync(int id);
-        Task CreateAsync(CreateColorDto categoryDto);
-        Task UpdateAsync(int id,UpdateColorDto updateCategoryDto);
+        Task CreateAsync(CreateColorDto createColorDto);
+        Task UpdateAsync(int id,UpdateColorDto updateColorDto);
         Task DeleteAsync(int id);
     }
 }

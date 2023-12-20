@@ -1,17 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories;
 using ProniaOnion.Application.Abstractions.Services;
-using ProniaOnion.Application.Dtos.Categories;
-using ProniaOnion.Application.Dtos;
-using ProniaOnion.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using ProniaOnion.Application.Dtos.Color;
-using Microsoft.EntityFrameworkCore;
+using ProniaOnion.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace ProniaOnion.Persistence.Implementations.Services
 {
