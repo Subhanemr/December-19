@@ -3,7 +3,7 @@ using ProniaOnion.Application.Dtos.Product;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateProductDtoValidator : AbstractValidator<CreateProductDto> 
+    public class CreateProductDtoValidator : AbstractValidator<CreateProductDto> 
     {
         public CreateProductDtoValidator()
         {
