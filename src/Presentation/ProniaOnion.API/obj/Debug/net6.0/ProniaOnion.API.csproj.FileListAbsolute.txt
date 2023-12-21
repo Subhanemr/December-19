@@ -74,3 +74,6 @@ C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\obj\Debug\net6
 C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\obj\Debug\net6.0\ref\ProniaOnion.API.dll
 C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Presentation\ProniaOnion.API\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll

@@ -38,21 +38,30 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemColorDto>> GetAllAsync(int page, int take)
+        public async Task<ICollection<ItemColorDto>> GetAllAsync(int page, int take, bool isDeleted = false)
         {
-            ICollection<Color> colors = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsTracking: false).ToListAsync();
+            ICollection<Color> colors = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemColorDto> colorDtos = _mapper.Map<ICollection<ItemColorDto>>(colors);
 
             return colorDtos;
         }
-        public async Task<ICollection<ItemColorDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Color, object>>? orderExpression)
+        public async Task<ICollection<ItemColorDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Color, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Color> colors = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsTracking: false).ToListAsync();
+            ICollection<Color> colors = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemColorDto> colorDtos = _mapper.Map<ICollection<ItemColorDto>>(colors);
 
             return colorDtos;
+        }
+
+        public async Task SoftDeleteAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Color color = await _repository.GetByIdAsync(id);
+            if (color == null) throw new Exception("Not Found");
+            _repository.SoftDelete(color);
+            await _repository.SaveChanceAsync();
         }
 
         //public async Task<GetCategoryDto> GetByIdAsync(int id)

@@ -4,6 +4,7 @@ using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.Dtos.Categories;
 using ProniaOnion.Application.Dtos;
 using ProniaOnion.Application.Dtos.Color;
+using ProniaOnion.Persistence.Implementations.Services;
 
 namespace ProniaOnion.API.Controllers
 {
@@ -19,9 +20,9 @@ namespace ProniaOnion.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int take)
+        public async Task<IActionResult> Get(int page, int take, bool isDeleted = false)
         {
-            return Ok(await _colorService.GetAllAsync(page, take));
+            return Ok(await _colorService.GetAllAsync(page, take, isDeleted: isDeleted));
         }
         //[HttpGet("{id}")]
         //public async Task<IActionResult> Get(int id)
@@ -45,6 +46,12 @@ namespace ProniaOnion.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _colorService.DeleteAsync(id);
+            return NoContent();
+        }
+        [HttpDelete("SoftDelete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            await _colorService.SoftDeleteAsync(id);
             return NoContent();
         }
     }

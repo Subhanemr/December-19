@@ -10,7 +10,6 @@
 
         public BaseEntity()
         {
-            CreateAt = DateTime.Now;
             CreatedBy = "Doggy";
         }
     }

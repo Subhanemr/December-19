@@ -10,6 +10,7 @@ namespace ProniaOnion.Application.Abstractions.Repositories
             int skip = 0,
             int take = 0,
             bool IsTracking = true,
+            bool IsDeleted = false,
             params string[] includes);
 
         IQueryable<T> GetAllByOrderAsync(Expression<Func<T, bool>>? expression = null,
@@ -18,12 +19,14 @@ namespace ProniaOnion.Application.Abstractions.Repositories
             int skip = 0,
             int take = 0,
             bool IsTracking = true,
+            bool IsDeleted = false,
             params string[] includes);
 
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void SoftDelete(T entity);
         Task SaveChanceAsync();
         Task<bool> CheckUnique(Expression<Func<T , bool>> expression);
     }

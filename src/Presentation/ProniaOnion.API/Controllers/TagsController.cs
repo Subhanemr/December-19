@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.Dtos.Color;
 using ProniaOnion.Application.Dtos.Tag;
+using ProniaOnion.Persistence.Implementations.Services;
 
 namespace ProniaOnion.API.Controllers
 {
@@ -10,17 +11,17 @@ namespace ProniaOnion.API.Controllers
     [ApiController]
     public class TagsController : ControllerBase
     {
-        private readonly ITagService _colorService;
+        private readonly ITagService _tagService;
 
-        public TagsController(ITagService colorService)
+        public TagsController(ITagService tagService)
         {
-            _colorService = colorService;
+            _tagService = tagService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int take)
+        public async Task<IActionResult> Get(int page, int take, bool isDeleted = false)
         {
-            return Ok(await _colorService.GetAllAsync(page, take));
+            return Ok(await _tagService.GetAllAsync(page, take, isDeleted: isDeleted));
         }
         //[HttpGet("{id}")]
         //public async Task<IActionResult> Get(int id)
@@ -31,19 +32,25 @@ namespace ProniaOnion.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateTagDto createTagDto)
         {
-            await _colorService.CreateAsync(createTagDto);
+            await _tagService.CreateAsync(createTagDto);
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateTagDto updateTagDto)
         {
-            await _colorService.UpdateAsync(id, updateTagDto);
+            await _tagService.UpdateAsync(id, updateTagDto);
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _colorService.DeleteAsync(id);
+            await _tagService.DeleteAsync(id);
+            return NoContent();
+        }
+        [HttpDelete("SoftDelete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            await _tagService.SoftDeleteAsync(id);
             return NoContent();
         }
     }

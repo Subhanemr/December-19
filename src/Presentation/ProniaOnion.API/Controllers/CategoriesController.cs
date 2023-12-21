@@ -18,9 +18,9 @@ namespace ProniaOnion.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int take)
+        public async Task<IActionResult> Get(int page, int take, bool isDeleted = false)
         {
-            return Ok(await _categoryService.GetAllAsync(page, take));
+            return Ok(await _categoryService.GetAllAsync(page, take, isDeleted: isDeleted));
         }
         //[HttpGet("{id}")]
         //public async Task<IActionResult> Get(int id)
@@ -44,6 +44,12 @@ namespace ProniaOnion.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.DeleteAsync(id);
+            return NoContent();
+        }
+        [HttpDelete("SoftDelete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            await _categoryService.SoftDeleteAsync(id);
             return NoContent();
         }
     }

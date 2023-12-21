@@ -44,21 +44,30 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemTagDto>> GetAllAsync(int page, int take)
+        public async Task<ICollection<ItemTagDto>> GetAllAsync(int page, int take, bool isDeleted = false)
         {
-            ICollection<Tag> tags = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsTracking: false).ToListAsync();
+            ICollection<Tag> tags = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemTagDto> tagDtos = _mapper.Map<ICollection<ItemTagDto>>(tags);
 
             return tagDtos;
         }
-        public async Task<ICollection<ItemTagDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Tag, object>>? orderExpression)
+        public async Task<ICollection<ItemTagDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Tag> tags = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsTracking: false).ToListAsync();
+            ICollection<Tag> tags = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemTagDto> tagDtos = _mapper.Map<ICollection<ItemTagDto>>(tags);
 
             return tagDtos;
+        }
+
+        public async Task SoftDeleteAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Tag tag = await _repository.GetByIdAsync(id);
+            if (tag == null) throw new Exception("Not Found");
+            _repository.SoftDelete(tag);
+            await _repository.SaveChanceAsync();
         }
 
         //public async Task<GetCategoryDto> GetByIdAsync(int id)

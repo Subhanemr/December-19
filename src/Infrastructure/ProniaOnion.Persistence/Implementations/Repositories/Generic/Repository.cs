@@ -33,7 +33,7 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
             _dbSet.Remove(entity);
         }
 
-        public IQueryable<T> GetAllAsync(Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 0, bool IsTracking = true, params string[] includes)
+        public IQueryable<T> GetAllAsync(Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 0, bool IsTracking = true, bool IsDeleted = false, params string[] includes)
         {
             var query = _dbSet.AsQueryable();
             if (expression != null) query = query.Where(expression);
@@ -49,10 +49,13 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
                     query = query.Include(includes[i]);
                 }
             }
+
+            if (IsDeleted) query = query.IgnoreQueryFilters();
+
             return IsTracking ? query : query.AsNoTracking();
         }
 
-        public IQueryable<T> GetAllByOrderAsync(Expression<Func<T, bool>>? expression = null, Expression<Func<T, object>>? orderException = null, bool IsDescending = false, int skip = 0, int take = 0, bool IsTracking = true, params string[] includes)
+        public IQueryable<T> GetAllByOrderAsync(Expression<Func<T, bool>>? expression = null, Expression<Func<T, object>>? orderException = null, bool IsDescending = false, int skip = 0, int take = 0, bool IsTracking = true, bool IsDeleted = false, params string[] includes)
         {
             var query = _dbSet.AsQueryable();
             if (expression != null) query = query.Where(expression);
@@ -74,6 +77,9 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
                     query = query.Include(includes[i]);
                 }
             }
+
+            if (IsDeleted) query = query.IgnoreQueryFilters();
+
             return IsTracking ? query : query.AsNoTracking();
         }
 
@@ -87,6 +93,12 @@ namespace ProniaOnion.Persistence.Implementations.Repositories.Generic
         public async Task SaveChanceAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public void SoftDelete(T entity)
+        {
+            entity.IsDeleted = true;
+            _dbSet.Update(entity);
         }
 
         public async void Update(T entity)
