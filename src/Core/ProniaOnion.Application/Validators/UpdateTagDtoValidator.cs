@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using ProniaOnion.Application.Dtos.Color;
+using ProniaOnion.Application.Dtos.Tag;
 
 namespace ProniaOnion.Application.Validators
 {
-    public class UpdateColorDtoValidator : AbstractValidator<UpdateColorDto>
+    public class UpdateTagDtoValidator : AbstractValidator<UpdateTagDto>
     {
-        public UpdateColorDtoValidator()
+        public UpdateTagDtoValidator()
         {
             RuleFor(x => x.name)
                 .NotEmpty().WithMessage("Name is required")
