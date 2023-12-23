@@ -22,7 +22,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task CreateAsync(CreateCategoryDto createCategoryDto)
         {
-            bool result = await _repository.CheckUnique(c => c.Name == createCategoryDto.name);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == createCategoryDto.name);
             if (result) throw new Exception("Bad Request");
             await _repository.AddAsync(_mapper.Map<Category>(createCategoryDto));
             await _repository.SaveChanceAsync();
@@ -39,17 +39,17 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemCategoryDto>> GetAllAsync(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemCategoryDto>> GetAllWhere(int page, int take, bool isDeleted = false)
         {
-            ICollection<Category> categories = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Category> categories = await _repository.GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemCategoryDto> categoryDtos = _mapper.Map<ICollection<ItemCategoryDto>>(categories);
 
             return categoryDtos;
         }
-        public async Task<ICollection<ItemCategoryDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Category, object>>? orderExpression, bool isDeleted = false)
+        public async Task<ICollection<ItemCategoryDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Category, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Category> categories = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Category> categories = await _repository.GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemCategoryDto> categoryDtos = _mapper.Map<ICollection<ItemCategoryDto>>(categories);
 
@@ -84,7 +84,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             if (category == null) throw new Exception("Not Found");
 
-            bool result = await _repository.CheckUnique(c => c.Name == updateCategoryDto.name && c.Id != id);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == updateCategoryDto.name && c.Id != id);
             if (result) throw new Exception("Bad Request");
 
             _mapper.Map(updateCategoryDto, category);

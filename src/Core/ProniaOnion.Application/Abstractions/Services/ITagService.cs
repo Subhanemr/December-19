@@ -12,8 +12,8 @@ namespace ProniaOnion.Application.Abstractions.Services
 {
     public interface ITagService
     {
-        Task<ICollection<ItemTagDto>> GetAllAsync(int page, int take, bool isDeleted = false);
-        Task<ICollection<ItemTagDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false);
+        Task<ICollection<ItemTagDto>> GetAllWhere(int page, int take, bool isDeleted = false);
+        Task<ICollection<ItemTagDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false);
         //Task<GetCategoryDto> GetByIdAsync(int id);
         Task CreateAsync(CreateTagDto createTagDto);
         Task UpdateAsync(int id, UpdateTagDto updateTagDto);

@@ -27,7 +27,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task CreateAsync(CreateTagDto createTagDto)
         {
-            bool result = await _repository.CheckUnique(c => c.Name == createTagDto.name);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == createTagDto.name);
             if (result) throw new Exception("Bad Request");
             await _repository.AddAsync(_mapper.Map<Tag>(createTagDto));
             await _repository.SaveChanceAsync();
@@ -44,17 +44,17 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemTagDto>> GetAllAsync(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemTagDto>> GetAllWhere(int page, int take, bool isDeleted = false)
         {
-            ICollection<Tag> tags = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Tag> tags = await _repository.GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemTagDto> tagDtos = _mapper.Map<ICollection<ItemTagDto>>(tags);
 
             return tagDtos;
         }
-        public async Task<ICollection<ItemTagDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false)
+        public async Task<ICollection<ItemTagDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Tag> tags = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Tag> tags = await _repository.GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemTagDto> tagDtos = _mapper.Map<ICollection<ItemTagDto>>(tags);
 
@@ -89,7 +89,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             if (tag == null) throw new Exception("Not Found");
 
-            bool result = await _repository.CheckUnique(c => c.Name == updateTagDto.name && c.Id != id);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == updateTagDto.name && c.Id != id);
             if (result) throw new Exception("Bad Request");
 
             _mapper.Map(updateTagDto, tag);

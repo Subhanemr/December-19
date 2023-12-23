@@ -21,7 +21,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task CreateAsync(CreateColorDto createColorDto)
         {
-            bool result = await _repository.CheckUnique(c => c.Name == createColorDto.name);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == createColorDto.name);
             if (result) throw new Exception("Bad Request");
             await _repository.AddAsync(_mapper.Map<Color>(createColorDto));
             await _repository.SaveChanceAsync();
@@ -38,17 +38,17 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemColorDto>> GetAllAsync(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemColorDto>> GetAllWhere(int page, int take, bool isDeleted = false)
         {
-            ICollection<Color> colors = await _repository.GetAllAsync(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Color> colors = await _repository.GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemColorDto> colorDtos = _mapper.Map<ICollection<ItemColorDto>>(colors);
 
             return colorDtos;
         }
-        public async Task<ICollection<ItemColorDto>> GetAllByOrderAsync(int page, int take, Expression<Func<Color, object>>? orderExpression, bool isDeleted = false)
+        public async Task<ICollection<ItemColorDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Color, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Color> colors = await _repository.GetAllByOrderAsync(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Color> colors = await _repository.GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemColorDto> colorDtos = _mapper.Map<ICollection<ItemColorDto>>(colors);
 
@@ -61,6 +61,14 @@ namespace ProniaOnion.Persistence.Implementations.Services
             Color color = await _repository.GetByIdAsync(id);
             if (color == null) throw new Exception("Not Found");
             _repository.SoftDelete(color);
+            await _repository.SaveChanceAsync();
+        }
+        public async Task ReverseSoftDeleteAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Color color = await _repository.GetByIdAsync(id);
+            if (color == null) throw new Exception("Not Found");
+            _repository.ReverseSoftDelete(color);
             await _repository.SaveChanceAsync();
         }
 
@@ -83,7 +91,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             if (color == null) throw new Exception("Not Found");
 
-            bool result = await _repository.CheckUnique(c => c.Name == updateColorDto.name && c.Id != id);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == updateColorDto.name && c.Id != id);
             if (result) throw new Exception("Bad Request");
 
             _mapper.Map(updateColorDto, color);
