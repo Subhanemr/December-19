@@ -106,7 +106,9 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (id <= 0) throw new Exception("Bad Request");
             Product item = await _repository.GetByIdAsync(id, includes: nameof(Product.Category));
             if (item == null) throw new Exception("Not Found");
+
             GetProductDto dto = _mapper.Map<GetProductDto>(item);
+
             return dto;
         }
     }

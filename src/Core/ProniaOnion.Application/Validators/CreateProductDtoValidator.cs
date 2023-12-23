@@ -7,6 +7,8 @@ namespace ProniaOnion.Application.Validators
     {
         public CreateProductDtoValidator()
         {
+            RuleFor(x => x.categoryId).GreaterThan(0).WithMessage("CategoryId must be greater than 0");
+
             RuleFor(x => x.name)
                 .NotEmpty().WithMessage("Name is required")
                 .MaximumLength(100).WithMessage("Name max characters is 100")
