@@ -31,15 +31,15 @@ namespace ProniaOnion.API.Controllers
         //    return Ok(await _categoryService.GetByIdAsync(id));
         //}
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateColorDto createColorDto)
+        public async Task<IActionResult> Create([FromForm] CreateColorDto create)
         {
-            await _service.CreateAsync(createColorDto);
+            await _service.CreateAsync(create);
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] UpdateColorDto updateColorDto)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateColorDto update)
         {
-            await _service.UpdateAsync(id, updateColorDto);
+            await _service.UpdateAsync(id, update);
             return NoContent();
         }
         [HttpDelete("{id}")]
@@ -52,6 +52,12 @@ namespace ProniaOnion.API.Controllers
         public async Task<IActionResult> SoftDelete(int id)
         {
             await _service.SoftDeleteAsync(id);
+            return NoContent();
+        }
+        [HttpDelete("ReverseSoftDelete/{id}")]
+        public async Task<IActionResult> ReverseSoftDelete(int id)
+        {
+            await _service.ReverseSoftDeleteAsync(id);
             return NoContent();
         }
     }

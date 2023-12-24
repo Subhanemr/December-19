@@ -20,48 +20,59 @@ namespace ProniaOnion.Persistence.Implementations.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(CreateCategoryDto createCategoryDto)
+        public async Task CreateAsync(CreateCategoryDto create)
         {
-            bool result = await _repository.CheckUniqueAsync(c => c.Name == createCategoryDto.name);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == create.name);
             if (result) throw new Exception("Bad Request");
-            await _repository.AddAsync(_mapper.Map<Category>(createCategoryDto));
+            await _repository.AddAsync(_mapper.Map<Category>(create));
             await _repository.SaveChanceAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Category category = await _repository.GetByIdAsync(id);
+            Category item = await _repository.GetByIdAsync(id);
 
-            if (category == null) throw new Exception("Not Found");
+            if (item == null) throw new Exception("Not Found");
 
-            _repository.Delete(category);
+            _repository.Delete(item);
             await _repository.SaveChanceAsync();
         }
 
         public async Task<ICollection<ItemCategoryDto>> GetAllWhere(int page, int take, bool isDeleted = false)
         {
-            ICollection<Category> categories = await _repository.GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Category> items = await _repository
+                .GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
-            ICollection<ItemCategoryDto> categoryDtos = _mapper.Map<ICollection<ItemCategoryDto>>(categories);
+            ICollection<ItemCategoryDto> dtos = _mapper.Map<ICollection<ItemCategoryDto>>(items);
 
-            return categoryDtos;
+            return dtos;
         }
-        public async Task<ICollection<ItemCategoryDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Category, object>>? orderExpression, bool isDeleted = false)
+        public async Task<ICollection<ItemCategoryDto>> GetAllWhereByOrder(int page, int take, 
+            Expression<Func<Category, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Category> categories = await _repository.GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Category> items = await _repository
+                .GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
-            ICollection<ItemCategoryDto> categoryDtos = _mapper.Map<ICollection<ItemCategoryDto>>(categories);
+            ICollection<ItemCategoryDto> dtos = _mapper.Map<ICollection<ItemCategoryDto>>(items);
 
-            return categoryDtos;
+            return dtos;
         }
 
         public async Task SoftDeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Category category = await _repository.GetByIdAsync(id);
-            if (category == null) throw new Exception("Not Found");
-            _repository.SoftDelete(category);
+            Category item = await _repository.GetByIdAsync(id);
+            if (item == null) throw new Exception("Not Found");
+            _repository.SoftDelete(item);
+            await _repository.SaveChanceAsync();
+        }
+        public async Task ReverseSoftDeleteAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Category item = await _repository.GetByIdAsync(id);
+            if (item == null) throw new Exception("Not Found");
+            _repository.ReverseSoftDelete(item);
             await _repository.SaveChanceAsync();
         }
 
@@ -77,19 +88,19 @@ namespace ProniaOnion.Persistence.Implementations.Services
         //    };
         //}
 
-        public async Task UpdateAsync(int id, UpdateCategoryDto updateCategoryDto)
+        public async Task UpdateAsync(int id, UpdateCategoryDto update)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Category category = await _repository.GetByIdAsync(id);
+            Category item = await _repository.GetByIdAsync(id);
 
-            if (category == null) throw new Exception("Not Found");
+            if (item == null) throw new Exception("Not Found");
 
-            bool result = await _repository.CheckUniqueAsync(c => c.Name == updateCategoryDto.name && c.Id != id);
+            bool result = await _repository.CheckUniqueAsync(c => c.Name == update.name && c.Id != id);
             if (result) throw new Exception("Bad Request");
 
-            _mapper.Map(updateCategoryDto, category);
+            _mapper.Map(update, item);
 
-            _repository.Update(category);
+            _repository.Update(item);
             await _repository.SaveChanceAsync();
         }
     }

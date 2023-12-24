@@ -12,9 +12,6 @@ namespace ProniaOnion.Persistence.Implementations.Repositories
 {
     public class ColorRepository : Repository<Color>, IColorRepository
     {
-        public ColorRepository(AppDbContext context) : base(context)
-        {
-
-        }
+        public ColorRepository(AppDbContext context) : base(context) { }
     }
 }

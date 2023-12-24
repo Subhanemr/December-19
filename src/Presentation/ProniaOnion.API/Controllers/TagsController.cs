@@ -11,17 +11,17 @@ namespace ProniaOnion.API.Controllers
     [ApiController]
     public class TagsController : ControllerBase
     {
-        private readonly ITagService _tagService;
+        private readonly ITagService _service;
 
-        public TagsController(ITagService tagService)
+        public TagsController(ITagService service)
         {
-            _tagService = tagService;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(int page, int take, bool isDeleted = false)
         {
-            return Ok(await _tagService.GetAllWhere(page, take, isDeleted: isDeleted));
+            return Ok(await _service.GetAllWhere(page, take, isDeleted: isDeleted));
         }
         //[HttpGet("{id}")]
         //public async Task<IActionResult> Get(int id)
@@ -30,27 +30,33 @@ namespace ProniaOnion.API.Controllers
         //    return Ok(await _categoryService.GetByIdAsync(id));
         //}
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateTagDto createTagDto)
+        public async Task<IActionResult> Create([FromForm] CreateTagDto create)
         {
-            await _tagService.CreateAsync(createTagDto);
+            await _service.CreateAsync(create);
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] UpdateTagDto updateTagDto)
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateTagDto update)
         {
-            await _tagService.UpdateAsync(id, updateTagDto);
+            await _service.UpdateAsync(id, update);
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _tagService.DeleteAsync(id);
+            await _service.DeleteAsync(id);
             return NoContent();
         }
         [HttpDelete("SoftDelete/{id}")]
         public async Task<IActionResult> SoftDelete(int id)
         {
-            await _tagService.SoftDeleteAsync(id);
+            await _service.SoftDeleteAsync(id);
+            return NoContent();
+        }
+        [HttpDelete("ReverseSoftDelete/{id}")]
+        public async Task<IActionResult> ReverseSoftDelete(int id)
+        {
+            await _service.ReverseSoftDeleteAsync(id);
             return NoContent();
         }
     }

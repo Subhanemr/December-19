@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories;
 using ProniaOnion.Application.Abstractions.Services;
-using ProniaOnion.Application.Dtos.Color;
 using ProniaOnion.Application.Dtos.Product;
 using ProniaOnion.Domain.Entities;
 using System.Linq.Expressions;
@@ -41,15 +40,18 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
         public async Task<ICollection<ItemProductDto>> GetAllWhereAsync(int page, int take, bool isDeleted = false)
         {
-            ICollection<Product> items = await _repository.GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Product> items = await _repository
+                .GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemProductDto> dtos = _mapper.Map<ICollection<ItemProductDto>>(items);
 
             return dtos;
         }
-        public async Task<ICollection<ItemProductDto>> GetAllWhereByOrderAsync(int page, int take, Expression<Func<Product, object>>? orderExpression, bool isDeleted = false)
+        public async Task<ICollection<ItemProductDto>> GetAllWhereByOrderAsync(int page, int take, 
+            Expression<Func<Product, object>>? orderExpression, bool isDeleted = false)
         {
-            ICollection<Product> items = await _repository.GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
+            ICollection<Product> items = await _repository
+                .GetAllWhereByOrder(orderException: orderExpression, skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
 
             ICollection<ItemProductDto> dtos = _mapper.Map<ICollection<ItemProductDto>>(items);
 
