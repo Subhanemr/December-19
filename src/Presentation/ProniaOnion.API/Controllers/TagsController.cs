@@ -23,12 +23,11 @@ namespace ProniaOnion.API.Controllers
         {
             return Ok(await _service.GetAllWhere(page, take, isDeleted: isDeleted));
         }
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> Get(int id)
-        //{
-        //    if (id <= 0) return BadRequest();
-        //    return Ok(await _categoryService.GetByIdAsync(id));
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok(await _service.GetByIdAsync(id));
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateTagDto create)
         {

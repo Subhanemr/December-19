@@ -23,7 +23,6 @@ namespace ProniaOnion.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            if (id <= 0) return BadRequest();
             return Ok(await _service.GetByIdAsync(id));
         }
         [HttpPost]

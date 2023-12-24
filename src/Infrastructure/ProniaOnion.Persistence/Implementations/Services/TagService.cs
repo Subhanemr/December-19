@@ -76,18 +76,6 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        //public async Task<GetCategoryDto> GetByIdAsync(int id)
-        //{
-        //    Category category = await _repository.GetByIdAsync(id);
-        //    if (category == null) throw new Exception("Not Found");
-
-        //    return new GetCategoryDto
-        //    {
-        //        Id = category.Id,
-        //        Name = category.Name
-        //    };
-        //}
-
         public async Task UpdateAsync(int id, UpdateTagDto update)
         {
             if (id <= 0) throw new Exception("Bad Request");
@@ -102,6 +90,16 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             _repository.Update(item);
             await _repository.SaveChanceAsync();
+        }
+        public async Task<GetTagDto> GetByIdAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Tag item = await _repository.GetByIdAsync(id, includes: $"{nameof(Tag.ProductTags)}.{nameof(ProductTag.Product)}");
+            if (item == null) throw new Exception("Not Found");
+
+            GetTagDto dto = _mapper.Map<GetTagDto>(item);
+
+            return dto;
         }
     }
 }

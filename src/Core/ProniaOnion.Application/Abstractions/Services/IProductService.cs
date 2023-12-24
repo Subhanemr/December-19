@@ -9,7 +9,6 @@ namespace ProniaOnion.Application.Abstractions.Services
     {
         Task<ICollection<ItemProductDto>> GetAllWhereAsync(int page, int take, bool isDeleted = false);
         Task<ICollection<ItemProductDto>> GetAllWhereByOrderAsync(int page, int take, Expression<Func<Product, object>>? orderExpression, bool isDeleted = false);
-        //Task<GetCategoryDto> GetByIdAsync(int id);
         Task CreateAsync(CreateProductDto create);
         Task UpdateAsync(int id, UpdateProductDto update);
         Task DeleteAsync(int id);

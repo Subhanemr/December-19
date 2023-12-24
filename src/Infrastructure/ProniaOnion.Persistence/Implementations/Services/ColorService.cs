@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.Dtos.Categories;
 using ProniaOnion.Application.Dtos.Color;
 using ProniaOnion.Domain.Entities;
 using System.Linq.Expressions;
@@ -75,18 +76,6 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        //public async Task<GetCategoryDto> GetByIdAsync(int id)
-        //{
-        //    Category category = await _repository.GetByIdAsync(id);
-        //    if (category == null) throw new Exception("Not Found");
-
-        //    return new GetCategoryDto
-        //    {
-        //        Id = category.Id,
-        //        Name = category.Name
-        //    };
-        //}
-
         public async Task UpdateAsync(int id, UpdateColorDto update)
         {
             if (id <= 0) throw new Exception("Bad Request");
@@ -102,5 +91,16 @@ namespace ProniaOnion.Persistence.Implementations.Services
             _repository.Update(item);
             await _repository.SaveChanceAsync();
         }
+        public async Task<GetColorDto> GetByIdAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Color item = await _repository.GetByIdAsync(id, includes: $"{nameof(Color.ProductColors)}.{nameof(ProductColor.Product)}");
+            if (item == null) throw new Exception("Not Found");
+
+            GetColorDto dto = _mapper.Map<GetColorDto>(item);
+
+            return dto;
+        }
+
     }
 }

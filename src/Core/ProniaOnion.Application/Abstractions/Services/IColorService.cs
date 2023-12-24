@@ -1,13 +1,6 @@
-﻿using ProniaOnion.Application.Dtos.Categories;
-using ProniaOnion.Application.Dtos;
+﻿using ProniaOnion.Application.Dtos.Color;
 using ProniaOnion.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using ProniaOnion.Application.Dtos.Color;
 
 namespace ProniaOnion.Application.Abstractions.Services
 {
@@ -15,7 +8,7 @@ namespace ProniaOnion.Application.Abstractions.Services
     {
         Task<ICollection<ItemColorDto>> GetAllWhere(int page, int take, bool isDeleted = false);
         Task<ICollection<ItemColorDto>> GetAllWhereByOrder(int page, int take, Expression<Func<Color, object>>? orderExpression, bool isDeleted = false);
-        //Task<GetCategoryDto> GetByIdAsync(int id);
+        Task<GetColorDto> GetByIdAsync(int id);
         Task CreateAsync(CreateColorDto create);
         Task UpdateAsync(int id,UpdateColorDto update);
         Task DeleteAsync(int id);

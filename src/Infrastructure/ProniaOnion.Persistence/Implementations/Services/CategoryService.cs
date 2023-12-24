@@ -103,5 +103,16 @@ namespace ProniaOnion.Persistence.Implementations.Services
             _repository.Update(item);
             await _repository.SaveChanceAsync();
         }
+
+        public async Task<GetCategoryDto> GetByIdAsync(int id)
+        {
+            if (id <= 0) throw new Exception("Bad Request");
+            Category item = await _repository.GetByIdAsync(id, includes: nameof(Category.Products));
+            if (item == null) throw new Exception("Not Found");
+
+            GetCategoryDto dto = _mapper.Map<GetCategoryDto>(item);
+
+            return dto;
+        }
     }
 }

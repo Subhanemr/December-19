@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
-using ProniaOnion.Application.Dtos.Categories;
-using ProniaOnion.Application.Dtos;
-using ProniaOnion.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ProniaOnion.Application.Dtos.Color;
+using ProniaOnion.Domain.Entities;
 
 namespace ProniaOnion.Application.MappingProfiles
 {
@@ -18,6 +11,8 @@ namespace ProniaOnion.Application.MappingProfiles
             CreateMap<CreateColorDto, Color>();
             CreateMap<Color, ItemColorDto>().ReverseMap();
             CreateMap<UpdateColorDto, Color>().ReverseMap();
+            CreateMap<Color, GetColorDto>().ReverseMap();
+
         }
     }
 }
