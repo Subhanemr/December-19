@@ -49,7 +49,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             foreach (var tagId in create.tagIds)
             {
                 bool tagResult = await _tagRepository.CheckUniqueAsync(x => x.Id == tagId);
-                if (!tagResult) throw new Exception("Color not exsist");
+                if (!tagResult) throw new Exception("Tag not exsist");
                 item.ProductTags.Add(new ProductTag { TagId = tagId });
             }
 
@@ -165,7 +165,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             foreach (var tagId in update.tagIds)
             {
                 bool colorResult = await _tagRepository.CheckUniqueAsync(x => x.Id == tagId);
-                if (!colorResult) throw new Exception("Color not exsist");
+                if (!colorResult) throw new Exception("Tag not exsist");
 
                 if (!item.ProductTags.Any(pc => pc.TagId == tagId))
                 {
