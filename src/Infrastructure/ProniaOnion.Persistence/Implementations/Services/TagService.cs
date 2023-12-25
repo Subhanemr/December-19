@@ -30,7 +30,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task DeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Tag item = await _repository.GetByIdAsync(id);
+            Tag item = await _repository.GetByIdAsync(id, IsDeleted: true);
 
             if (item == null) throw new Exception("Not Found");
 
@@ -38,7 +38,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemTagDto>> GetAllWhere(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemTagDto>> GetAllWhereAsync(int page, int take, bool isDeleted = false)
         {
             ICollection<Tag> items = await _repository
                 .GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
@@ -47,7 +47,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             return dtos;
         }
-        public async Task<ICollection<ItemTagDto>> GetAllWhereByOrder(int page, int take, 
+        public async Task<ICollection<ItemTagDto>> GetAllWhereByOrderAsync(int page, int take, 
             Expression<Func<Tag, object>>? orderExpression, bool isDeleted = false)
         {
             ICollection<Tag> items = await _repository

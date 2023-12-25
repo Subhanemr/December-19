@@ -2,5 +2,5 @@
 
 namespace ProniaOnion.Application.Dtos.Color
 {
-    public record GetColorDto(int id, string name, ICollection<IncludeProductDto> products);
+    public record GetColorDto(int id, string name);
 }

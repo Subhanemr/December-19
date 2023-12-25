@@ -31,7 +31,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task DeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Color item = await _repository.GetByIdAsync(id);
+            Color item = await _repository.GetByIdAsync(id, IsDeleted: true);
 
             if (item == null) throw new Exception("Not Found");
 
@@ -39,7 +39,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemColorDto>> GetAllWhere(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemColorDto>> GetAllWhereAsync(int page, int take, bool isDeleted = false)
         {
             ICollection<Color> items = await _repository
                 .GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
@@ -48,7 +48,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             return dtos;
         }
-        public async Task<ICollection<ItemColorDto>> GetAllWhereByOrder(int page, int take,
+        public async Task<ICollection<ItemColorDto>> GetAllWhereByOrderAsync(int page, int take,
             Expression<Func<Color, object>>? orderExpression, bool isDeleted = false)
         {
             ICollection<Color> items = await _repository
@@ -94,7 +94,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task<GetColorDto> GetByIdAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Color item = await _repository.GetByIdAsync(id, includes: $"{nameof(Color.ProductColors)}.{nameof(ProductColor.Product)}");
+            Color item = await _repository.GetByIdAsync(id);
             if (item == null) throw new Exception("Not Found");
 
             GetColorDto dto = _mapper.Map<GetColorDto>(item);

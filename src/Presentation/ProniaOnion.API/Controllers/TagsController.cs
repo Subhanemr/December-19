@@ -21,7 +21,7 @@ namespace ProniaOnion.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int take, bool isDeleted = false)
         {
-            return Ok(await _service.GetAllWhere(page, take, isDeleted: isDeleted));
+            return Ok(await _service.GetAllWhereAsync(page, take, isDeleted: isDeleted));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

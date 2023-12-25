@@ -2,5 +2,5 @@
 
 namespace ProniaOnion.Application.Dtos.Tag
 {
-    public record GetTagDto(int id, string name, ICollection<IncludeProductDto> products);
+    public record GetTagDto(int id, string name);
 }

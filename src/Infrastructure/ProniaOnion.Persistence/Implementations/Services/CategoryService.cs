@@ -31,7 +31,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task DeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Category item = await _repository.GetByIdAsync(id);
+            Category item = await _repository.GetByIdAsync(id, IsDeleted: true);
 
             if (item == null) throw new Exception("Not Found");
 
@@ -39,7 +39,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             await _repository.SaveChanceAsync();
         }
 
-        public async Task<ICollection<ItemCategoryDto>> GetAllWhere(int page, int take, bool isDeleted = false)
+        public async Task<ICollection<ItemCategoryDto>> GetAllWhereAsync(int page, int take, bool isDeleted = false)
         {
             ICollection<Category> items = await _repository
                 .GetAllWhere(skip: (page - 1) * take, take: take, IsDeleted: isDeleted, IsTracking: false).ToListAsync();
@@ -48,7 +48,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             return dtos;
         }
-        public async Task<ICollection<ItemCategoryDto>> GetAllWhereByOrder(int page, int take, 
+        public async Task<ICollection<ItemCategoryDto>> GetAllWhereByOrderAsync(int page, int take, 
             Expression<Func<Category, object>>? orderExpression, bool isDeleted = false)
         {
             ICollection<Category> items = await _repository
@@ -75,18 +75,6 @@ namespace ProniaOnion.Persistence.Implementations.Services
             _repository.ReverseSoftDelete(item);
             await _repository.SaveChanceAsync();
         }
-
-        //public async Task<GetCategoryDto> GetByIdAsync(int id)
-        //{
-        //    Category category = await _repository.GetByIdAsync(id);
-        //    if (category == null) throw new Exception("Not Found");
-
-        //    return new GetCategoryDto
-        //    {
-        //        Id = category.Id,
-        //        Name = category.Name
-        //    };
-        //}
 
         public async Task UpdateAsync(int id, UpdateCategoryDto update)
         {

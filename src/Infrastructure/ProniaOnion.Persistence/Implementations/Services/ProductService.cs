@@ -30,7 +30,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task DeleteAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Product item = await _repository.GetByIdAsync(id);
+            Product item = await _repository.GetByIdAsync(id, IsDeleted: true);
 
             if (item == null) throw new Exception("Not Found");
 
