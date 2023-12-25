@@ -14,8 +14,8 @@ namespace ProniaOnion.Application.Dtos.Product
         public string Description { get; init; }
         public int CategoryId { get; init; }
         public IncludeCategoryDto Category { get; init; }
-        //public IncludeColorDto Color { get; set; }
-        //public IncludeTagDto Tag { get; set;}
+        public ICollection<IncludeColorDto> Colors { get; set; }
+        public ICollection<IncludeTagDto> Tags { get; set;}
 
     }
 }

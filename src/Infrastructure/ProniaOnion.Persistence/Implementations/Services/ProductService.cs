@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using ProniaOnion.Application.Abstractions.Repositories;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.Dtos.Color;
 using ProniaOnion.Application.Dtos.Product;
+using ProniaOnion.Application.Dtos.Tag;
 using ProniaOnion.Domain.Entities;
 using System.Drawing;
 using System.Linq.Expressions;
+using Color = ProniaOnion.Domain.Entities.Color;
 
 namespace ProniaOnion.Persistence.Implementations.Services
 {
@@ -177,11 +180,28 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task<GetProductDto> GetByIdAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            string[] includes = { $"{nameof(Product.ProductColors)}", $"{nameof(Product.ProductTags)}", };
-            Product item = await _repository.GetByIdAsync(id, includes: nameof(Product.Category));
+            string[] includes = { $"{nameof(Product.Category)}",
+                $"{nameof(Product.ProductColors)}",
+                $"{nameof(Product.ProductTags)}",
+                $"{nameof(Product.ProductColors)}.{nameof(ProductColor.Color)}",
+                $"{nameof(Product.ProductTags)}.{nameof(ProductTag.Tag)}"};
+            Product item = await _repository.GetByIdAsync(id, includes: includes);
             if (item == null) throw new Exception("Not Found");
 
             GetProductDto dto = _mapper.Map<GetProductDto>(item);
+
+            dto.Colors = new List<IncludeColorDto>();
+            dto.Tags = new List<IncludeTagDto>();
+
+            foreach (ProductColor color in item.ProductColors)
+            {
+                dto.Colors.Add(_mapper.Map<IncludeColorDto>(color.Color));
+            }
+
+            foreach (ProductTag tag in item.ProductTags)
+            {
+                dto.Tags.Add(_mapper.Map<IncludeTagDto>(tag.Tag));
+            }
 
             return dto;
         }
