@@ -8,6 +8,8 @@ namespace ProniaOnion.Application.Validators
         public UpdateProductDtoValidator()
         {
             RuleFor(x => x.categoryId).GreaterThan(0).WithMessage("CategoryId must be greater than 0");
+            RuleForEach(x => x.colorIds).GreaterThan(0).WithMessage("ColorId must be greater than 0");
+            RuleFor(x => x.colorIds).NotNull().WithMessage("Color was not be emty");
 
             RuleFor(x => x.name)
                 .NotEmpty().WithMessage("Name is required")

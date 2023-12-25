@@ -9,7 +9,7 @@
         //---Relational
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
-        public ICollection<ProductColor>? ProductColors { get; set; }
-        public ICollection<ProductTag>? ProductTags { get; set; }
+        public ICollection<ProductColor> ProductColors { get; set; } = null!;
+        public ICollection<ProductTag> ProductTags { get; set; } = null!;
     }
 }

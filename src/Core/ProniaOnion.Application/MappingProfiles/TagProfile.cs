@@ -12,6 +12,7 @@ namespace ProniaOnion.Application.MappingProfiles
             CreateMap<Tag, ItemTagDto>().ReverseMap();
             CreateMap<UpdateTagDto, Tag>().ReverseMap();
             CreateMap<Tag, GetTagDto>().ReverseMap();
+            CreateMap<Tag, IncludeTagDto>().ReverseMap();
 
         }
     }
