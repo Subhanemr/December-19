@@ -94,7 +94,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         public async Task<GetTagDto> GetByIdAsync(int id)
         {
             if (id <= 0) throw new Exception("Bad Request");
-            Tag item = await _repository.GetByIdAsync(id, includes: $"{nameof(Tag.ProductTags)}.{nameof(ProductTag.Product)}");
+            Tag item = await _repository.GetByIdAsync(id);
             if (item == null) throw new Exception("Not Found");
 
             GetTagDto dto = _mapper.Map<GetTagDto>(item);
