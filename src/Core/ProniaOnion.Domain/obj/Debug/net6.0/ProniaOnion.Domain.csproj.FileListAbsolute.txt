@@ -9,3 +9,4 @@ C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\Pr
 C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\refint\ProniaOnion.Domain.dll
 C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.pdb
 C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ref\ProniaOnion.Domain.dll
+C:\Users\T x\Desktop\ProniaOnion\src\Core\ProniaOnion.Domain\obj\Debug\net6.0\ProniaOnion.Domain.csproj.AssemblyReference.cache
