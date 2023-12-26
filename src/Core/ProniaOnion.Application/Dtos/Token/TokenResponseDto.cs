@@ -1,6 +1,6 @@
 ﻿namespace ProniaOnion.Application.Dtos.Token
 {
-    public class TokenResponseDto
+    public record TokenResponseDto
     {
         public string Token { get; init; }
     }
