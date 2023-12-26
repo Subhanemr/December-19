@@ -122,12 +122,12 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             foreach (ProductColor productColor in item.ProductColors)
             {
-                productColor.IsDeleted = true;
+                productColor.IsDeleted = false;
             }
 
             foreach (ProductTag productTag in item.ProductTags)
             {
-                productTag.IsDeleted = true;
+                productTag.IsDeleted = false;
             }
 
             await _repository.SaveChanceAsync();
