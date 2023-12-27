@@ -72,7 +72,6 @@ namespace ProniaOnion.Persistence.ServiceRegistration
                 };
             });
 
-
             return services;
         }
     }
