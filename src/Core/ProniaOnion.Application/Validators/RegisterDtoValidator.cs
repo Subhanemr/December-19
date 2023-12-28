@@ -21,7 +21,7 @@ namespace ProniaOnion.Application.Validators
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email must be entered mutled")
-                .Length(25, 255).WithMessage("It should be between 25 and 255 characters")
+                .Length(10, 255).WithMessage("It should be between 10 and 255 characters")
                 .EmailAddress().WithMessage("Invalid email address")
                 .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").WithMessage("Invalid email format");
 
