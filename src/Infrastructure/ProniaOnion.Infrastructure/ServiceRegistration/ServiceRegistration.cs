@@ -40,6 +40,5 @@ namespace ProniaOnion.Infrastructure.ServiceRegistration
 
             return services;
         }
-
     }
 }
