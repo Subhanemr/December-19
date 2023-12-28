@@ -1045,7 +1045,6 @@
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "FluentValidation.AspNetCore": "11.3.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.25",
           "ProniaOnion.Domain": "1.0.0"
         },
         "compile": {
@@ -1066,6 +1065,20 @@
         },
         "runtime": {
           "bin/placeholder/ProniaOnion.Domain.dll": {}
+        }
+      },
+      "ProniaOnion.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.25",
+          "ProniaOnion.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ProniaOnion.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ProniaOnion.Infrastructure.dll": {}
         }
       },
       "ProniaOnion.Persistence/1.0.0": {
@@ -2834,6 +2847,11 @@
       "path": "../../Core/ProniaOnion.Domain/ProniaOnion.Domain.csproj",
       "msbuildProject": "../../Core/ProniaOnion.Domain/ProniaOnion.Domain.csproj"
     },
+    "ProniaOnion.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../../Infrastructure/ProniaOnion.Infrastructure/ProniaOnion.Infrastructure.csproj",
+      "msbuildProject": "../../Infrastructure/ProniaOnion.Infrastructure/ProniaOnion.Infrastructure.csproj"
+    },
     "ProniaOnion.Persistence/1.0.0": {
       "type": "project",
       "path": "../../Infrastructure/ProniaOnion.Persistence/ProniaOnion.Persistence.csproj",
@@ -2843,6 +2861,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.EntityFrameworkCore.Design >= 6.0.25",
+      "ProniaOnion.Infrastructure >= 1.0.0",
       "ProniaOnion.Persistence >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
@@ -2880,6 +2899,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\T x\\Desktop\\ProniaOnion\\src\\Infrastructure\\ProniaOnion.Infrastructure\\ProniaOnion.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\T x\\Desktop\\ProniaOnion\\src\\Infrastructure\\ProniaOnion.Infrastructure\\ProniaOnion.Infrastructure.csproj"
+            },
             "C:\\Users\\T x\\Desktop\\ProniaOnion\\src\\Infrastructure\\ProniaOnion.Persistence\\ProniaOnion.Persistence.csproj": {
               "projectPath": "C:\\Users\\T x\\Desktop\\ProniaOnion\\src\\Infrastructure\\ProniaOnion.Persistence\\ProniaOnion.Persistence.csproj"
             }

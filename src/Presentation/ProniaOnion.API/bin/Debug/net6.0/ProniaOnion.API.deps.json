@@ -9,6 +9,7 @@
       "ProniaOnion.API/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "6.0.25",
+          "ProniaOnion.Infrastructure": "1.0.0",
           "ProniaOnion.Persistence": "1.0.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
@@ -615,7 +616,6 @@
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "FluentValidation.AspNetCore": "11.3.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.25",
           "ProniaOnion.Domain": "1.0.0"
         },
         "runtime": {
@@ -628,6 +628,15 @@
         },
         "runtime": {
           "ProniaOnion.Domain.dll": {}
+        }
+      },
+      "ProniaOnion.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.25",
+          "ProniaOnion.Application": "1.0.0"
+        },
+        "runtime": {
+          "ProniaOnion.Infrastructure.dll": {}
         }
       },
       "ProniaOnion.Persistence/1.0.0": {
@@ -1067,6 +1076,11 @@
       "sha512": ""
     },
     "ProniaOnion.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ProniaOnion.Infrastructure/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

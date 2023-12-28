@@ -15,13 +15,13 @@ namespace ProniaOnion.API.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("[Action]")]
         public async Task<IActionResult> Register([FromForm]RegisterDto register)
         {
             await _service.RegisterAsync(register);
             return NoContent();
         }
-        [HttpPut]
+        [HttpPost("[Action]")]
         public async Task<IActionResult> LogIn([FromForm]LoginDto login)
         {
             var result = await _service.LogInAsync(login);
