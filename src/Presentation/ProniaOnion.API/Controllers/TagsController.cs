@@ -10,7 +10,6 @@ namespace ProniaOnion.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
     public class TagsController : ControllerBase
     {
         private readonly ITagService _service;
@@ -31,30 +30,35 @@ namespace ProniaOnion.API.Controllers
             return Ok(await _service.GetByIdAsync(id));
         }
         [HttpPost("[Action]")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Create([FromForm] CreateTagDto create)
         {
             await _service.CreateAsync(create);
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("[Action]/{id}")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateTagDto update)
         {
             await _service.UpdateAsync(id, update);
             return NoContent();
         }
         [HttpDelete("[Action]/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
             return NoContent();
         }
         [HttpDelete("[Action]/{id}")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> SoftDelete(int id)
         {
             await _service.SoftDeleteAsync(id);
             return NoContent();
         }
         [HttpDelete("[Action]/{id}")]
+        [Authorize(Roles = "Admin,Member")]
         public async Task<IActionResult> ReverseSoftDelete(int id)
         {
             await _service.ReverseSoftDeleteAsync(id);

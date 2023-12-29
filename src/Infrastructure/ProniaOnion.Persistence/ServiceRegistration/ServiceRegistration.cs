@@ -47,6 +47,8 @@ namespace ProniaOnion.Persistence.ServiceRegistration
                 //options.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+            services.AddScoped<AppDbContextInitializer>();
+
             return services;
         }
     }

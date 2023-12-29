@@ -18,28 +18,26 @@ namespace ProniaOnion.Infrastructure.Implementations
             _configuration = configuration;
         }
 
-        public TokenResponseDto CreateJwt(AppUser user, int minutes)
+        public TokenResponseDto CreateJwt(AppUser user, ICollection<Claim> claims,int minutes)
         {
-            ICollection<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.Name),
-                new Claim(ClaimTypes.Surname, user.Surname),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
-            };
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
             var tokenOptions = new JwtSecurityToken(
                 issuer: _configuration["JWT:Issuer"],
                 audience: _configuration["JWT:Audience"],
                 claims: claims,
+                notBefore: DateTime.UtcNow,
                 expires: DateTime.Now.AddMinutes(minutes),
                 signingCredentials: signinCredentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            return new TokenResponseDto (tokenString, tokenOptions.ValidTo, user.Name);
+            return new TokenResponseDto(tokenString, tokenOptions.ValidTo, user.Name, CreateRefreshToken(), tokenOptions.ValidTo.AddMinutes(minutes/4));
+        }
+
+        public string CreateRefreshToken()
+        {
+            return Guid.NewGuid().ToString();   
         }
     }
 }

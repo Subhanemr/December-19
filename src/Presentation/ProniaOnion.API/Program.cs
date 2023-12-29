@@ -1,12 +1,14 @@
 using Microsoft.OpenApi.Models;
 using ProniaOnion.Application.ServiceRegistration;
 using ProniaOnion.Infrastructure.ServiceRegistration;
+using ProniaOnion.Persistence.Contexts;
 using ProniaOnion.Persistence.ServiceRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAplicationServices();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();
@@ -50,7 +52,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+using(var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitializer>();
+    initializer.InitializeDbContext().Wait();
+    initializer.CreateUserRoles().Wait();
+    initializer.InitializeAdmin().Wait();
+}
+
+    app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
