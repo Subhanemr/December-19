@@ -34,10 +34,10 @@ namespace ProniaOnion.Persistence.Contexts
             {
                 switch (data.State)
                 {
-                    case EntityState.Modified:
+                    case EntityState.Added:
                         data.Entity.CreateAt = DateTime.Now;
                         break;
-                    case EntityState.Added:
+                    case EntityState.Modified:
                         data.Entity.UpdateAt = DateTime.Now;
                         break;
                 }

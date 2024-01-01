@@ -9,6 +9,7 @@ namespace ProniaOnion.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(c => c.Name).IsRequired().HasMaxLength(50);
+            builder.HasIndex(c => c.Name).IsUnique();
         }
     }
 }
